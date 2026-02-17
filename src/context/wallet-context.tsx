@@ -1,5 +1,5 @@
 import { coinTypeValue } from "@/config/seed-phrase";
-import { coinType, type walletType } from "@/types/wallets.type";
+import { coinType, type keyPairType, type walletType } from "@/types/wallets.type";
 import {
   generateMnemonic,
   mnemonicToSeedSync,
@@ -19,8 +19,8 @@ interface walletContextType {
   seedPhrase: string[] | null;
   getMnemonic: () => void;
   getPublicPrivateKey: any;
-  wallet: walletType[] | null;
-  setWallet: React.Dispatch<React.SetStateAction<walletType[] | null>>;
+  wallet: walletType | null;
+  setWallet: React.Dispatch<React.SetStateAction<walletType | null>>;
   validateSeedPhrase: (seed: string) => boolean;
   selectedCoinType: coinType | null;
   setSelectedCoinType: React.Dispatch<React.SetStateAction<coinType | null>>;
@@ -49,7 +49,7 @@ export const WalletContextProvider = ({
   const [selectedCoinType, setSelectedCoinType] = useState<coinType | null>(
     null,
   );
-  const [wallet, setWallet] = useState<walletType[] | null>(null);
+  const [wallet, setWallet] = useState<walletType | null>(null);
 
   const getMnemonic = () => {
     const mnemonics = generateMnemonic(wordlist);
@@ -59,22 +59,31 @@ export const WalletContextProvider = ({
   };
 
   const createWallet = () => {
-    const walletCount =
-      wallet?.filter((value) => value.provider === selectedCoinType)?.length ??
-      0;
+    const walletCount = wallet ? wallet[selectedCoinType!]?.length ?? 0 : 0;
+
     const derivationPath = `m/44'/${coinTypeValue[selectedCoinType!]}'/${walletCount + 1}/0'`;
     const hd = HDKey.fromMasterSeed(seed);
     const child = hd.derive(derivationPath);
     const secretKey = child.privateKey;
     const keyPair = Keypair.fromSeed(secretKey);
 
-    const walletData: walletType = {
-      provider: selectedCoinType!,
+    const walletData: keyPairType = {
       publicKey: keyPair.publicKey,
       privateKey: keyPair.secretKey
     }
 
-    setWallet(wallet ? [...wallet, walletData] : [walletData]);
+    if (wallet) {
+      if (wallet[selectedCoinType!]) {
+        setWallet({ ...wallet, [selectedCoinType!]: wallet[selectedCoinType!]?.push(walletData) })
+      }
+    }
+    else {
+      const walletObj = {
+        [selectedCoinType!]: [walletData]
+      }
+      setWallet(walletObj)
+    }
+
   };
 
   const validateSeedPhrase = (seed: string) => {

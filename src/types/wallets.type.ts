@@ -1,9 +1,13 @@
 import type { PublicKey } from "@solana/web3.js";
 
-export interface walletType {
-    provider: coinType,
+export interface keyPairType {
     privateKey: Uint8Array<ArrayBufferLike>,
     publicKey: PublicKey
+
+}
+export interface walletType {
+    SOLANA?: keyPairType[],
+    ETHEREUM?: keyPairType[]
 }
 
 export enum coinType {
