@@ -8,6 +8,8 @@ const PostSeedPhraseCreation = () => {
 
     const { setSelectedCoinType } = useWalletContext();
 
+    console.log("select coin type")
+
     return (
         <div className="w-full">
             <Tabs

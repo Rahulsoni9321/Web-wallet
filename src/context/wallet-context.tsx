@@ -62,7 +62,7 @@ export const WalletContextProvider = ({
     const walletCount = wallet ? wallet[selectedCoinType!]?.length ?? 0 : 0;
 
     const derivationPath = `m/44'/${coinTypeValue[selectedCoinType!]}'/${walletCount}'/0'`;
-    console.log("path value.",derivationPath);
+    console.log("path value.", derivationPath);
     const hd = HDKey.fromMasterSeed(seed);
     const child = hd.derive(derivationPath);
     const secretKey = child.privateKey;
@@ -75,7 +75,9 @@ export const WalletContextProvider = ({
 
     if (wallet) {
       if (wallet[selectedCoinType!]) {
-        setWallet({ ...wallet, [selectedCoinType!]: wallet[selectedCoinType!]?.push(walletData) })
+        const existingValue = wallet[selectedCoinType!];
+        existingValue?.push(walletData);
+        setWallet({ ...wallet, [selectedCoinType!]: existingValue })
       }
     }
     else {
