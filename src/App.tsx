@@ -7,6 +7,7 @@ import PostSeedPhraseCreation from "./components/common/post-seed-phrase-creatio
 import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { WarningModal } from "./components/common/warning-modal";
+import Navbar from "./components/common/navbar";
 
 function App() {
   const { seedPhrase, wallet } = useWalletContext();
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <MaxWidthWrapper>
+      <Navbar></Navbar>
       <div className="bg-black min-h-screen flex flex-col items-center w-full gap-6 p-12">
         {!seedPhrase && <GenerateMnemonics></GenerateMnemonics>}
 
@@ -32,11 +34,11 @@ function App() {
           <div className="flex flex-col gap-8 items-start w-full">
             <SeedPhraseWrapper seedPhrase={seedPhrase}></SeedPhraseWrapper>
             <Button
-              variant={"default"}
+              variant={"destructive"}
               onClick={() => setWarningModal(!warningModal)}
               className="bg-white text-black cursor-pointer"
             >
-              Generate New Secret Phrase?
+              Delete All Wallets?
             </Button>
             <WarningModal
               onOpenChange={() => setWarningModal(!warningModal)}

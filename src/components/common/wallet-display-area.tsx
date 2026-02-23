@@ -8,7 +8,7 @@ const WalletDisplayArea = () => {
   const { selectedCoinType, wallet, createWallet } = useWalletContext();
 
   return (
-    <div className="rounded-3xl p-6 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white shadow-2xl border border-white/10 backdrop-blur-xl">
+    <div className="rounded-3xl p-6 bg-linear-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white shadow-2xl border border-white/10 backdrop-blur-xl">
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
@@ -52,7 +52,7 @@ const WalletDisplayArea = () => {
                 className="relative rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur-md shadow-lg overflow-hidden"
               >
                 {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 hover:opacity-100 transition" />
+                <div className="absolute inset-0 bg-linear-to-r from-cyan-500/10 to-purple-500/10 opacity-100 transition" />
 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col gap-3">

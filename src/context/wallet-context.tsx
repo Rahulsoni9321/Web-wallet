@@ -13,6 +13,7 @@ import { wordlist } from "@scure/bip39/wordlists/english.js";
 import React, {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -55,9 +56,7 @@ export const WalletContextProvider = ({
       : null,
   );
   const [seed, setSeed] = useState<any | null>(
-    localStorage.getItem("seed")
-      ? JSON.parse(localStorage.getItem("seed")!)
-      : null,
+    null,
   );
   const [selectedCoinType, setSelectedCoinType] = useState<coinType | null>(
     null,
@@ -73,10 +72,14 @@ export const WalletContextProvider = ({
     setWallet(null);
     setSeed(null);
     setSeedPhrase(null);
-    getMnemonic();
   }
 
-  console.log("this is the seed...", seed);
+  useEffect(() => {
+    if (seedPhrase) {
+      setSeed(mnemonicToSeedSync(seedPhrase.join(" ")));
+    }
+  }, [seedPhrase])
+
 
   const getMnemonic = () => {
     const mnemonics = generateMnemonic(wordlist);
@@ -84,7 +87,7 @@ export const WalletContextProvider = ({
     setSeedPhrase(seedPhraseArray);
     setSeed(mnemonicToSeedSync(mnemonics));
     localStorage.setItem("seedPhrase", JSON.stringify(seedPhraseArray));
-    localStorage.setItem("seed", JSON.stringify(mnemonicToSeedSync(mnemonics)));
+    // localStorage.setItem("seed", JSON.stringify(mnemonicToSeedSync(mnemonics)));
   };
 
   const createWallet = () => {

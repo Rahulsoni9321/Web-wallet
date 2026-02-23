@@ -10,7 +10,7 @@ const PostSeedPhraseCreation = () => {
   return (
     <div className="w-full">
       <Tabs
-        className="rounded-2xl bg-neutral-700/40 backdrop-blur-3xl shadow-2xl p-8"
+        className="rounded-2xl bg-neutral-900/40 backdrop-blur-3xl shadow-2xl p-8 w-full "
         onValueChange={(value) => setSelectedCoinType(value as coinType)}
       >
         <TabsList variant={"line"} className="text-white">
@@ -23,8 +23,9 @@ const PostSeedPhraseCreation = () => {
           text-gray-400
           data-[state=active]:text-white
           data-[state=active]:underline-offset-8
-          transition-all"
+          transition-all flex items-center gap-2"
             >
+              <img src={coins === "SOLANA" ? "/solana-logo.png" : "/Ethereum-Logo.png" }className="w-10 h-10"></img>
               {coins}
             </TabsTrigger>
           ))}
