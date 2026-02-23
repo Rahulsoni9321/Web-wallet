@@ -1,29 +1,94 @@
-import { useWalletContext } from "@/context/wallet-context"
+import { useWalletContext } from "@/context/wallet-context";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { PlusCircle, Trash } from "lucide-react";
+import { PlusCircle, Trash, Key, Wallet } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const WalletDisplayArea = () => {
-    const { selectedCoinType, wallet, createWallet } = useWalletContext();
-    console.log("this is the wallet.",wallet);
-    return (
-        <div className="rounded-2xl p-4 bg-neutral-800 text-white">
-            <div className="flex justify-end gap-4 items-center">
-            <Button variant={"outline"} onClick={createWallet} className="text-black cursor-pointer flex items-center gap-2"><PlusCircle></PlusCircle>Add Wallet</Button>
-            <Button variant={"destructive"} onClick={createWallet}className=" flex items-center gap-2"><Trash></Trash>Clear Wallet</Button>
-            </div>
-            {(wallet && wallet[selectedCoinType!]) &&
-                wallet[selectedCoinType!]?.map((walletDetails, index: number) => {
-                    return <div className="flex flex-col gap-3 items-start">
-                        <h1 className="flex items-center gap-2c text-3xl font-semibold">Wallet {index + 1}</h1>
-                        <p>Public Key :- {walletDetails.publicKey.toString()}</p>
-                        <Input type={"password"} value={walletDetails.privateKey.toString()}></Input>
-                    </div>
-                })
-            }
+  const { selectedCoinType, wallet, createWallet } = useWalletContext();
 
+  return (
+    <div className="rounded-3xl p-6 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white shadow-2xl border border-white/10 backdrop-blur-xl">
+
+      {/* Header */}
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold flex items-center gap-2">
+          <Wallet className="text-cyan-400" />
+          My Wallets
+        </h1>
+
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            onClick={createWallet}
+            className="text-black flex items-center gap-2 hover:scale-105 transition"
+          >
+            <PlusCircle size={18} />
+            Add
+          </Button>
+
+          <Button
+            variant="destructive"
+            className="flex items-center gap-2 hover:scale-105 transition"
+          >
+            <Trash size={18} />
+            Clear
+          </Button>
         </div>
-    )
-}
+      </div>
 
-export default WalletDisplayArea
+      {/* Wallet List */}
+      <AnimatePresence>
+        <div className="grid gap-5">
+          {wallet &&
+            wallet[selectedCoinType!]?.map((walletDetails, index: number) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                whileHover={{ scale: 1.02 }}
+                className="relative rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur-md shadow-lg overflow-hidden"
+              >
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 hover:opacity-100 transition" />
+
+                {/* Content */}
+                <div className="relative z-10 flex flex-col gap-3">
+
+                  {/* Title */}
+                  <h2 className="text-lg font-semibold flex items-center gap-2">
+                    <Key className="text-cyan-400" size={18} />
+                    Wallet {index + 1}
+                  </h2>
+
+                  {/* Public Key */}
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">Public Key</p>
+                    <p className="text-sm break-all text-cyan-100">
+                      {walletDetails.publicKey.toString()}
+                    </p>
+                  </div>
+
+                  {/* Private Key */}
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">Private Key</p>
+
+                    <Input
+                      type="password"
+                      value={walletDetails.privateKey.toString()}
+                      readOnly
+                      className="bg-black/40 border-white/10 focus:border-cyan-400 transition"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+        </div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default WalletDisplayArea;

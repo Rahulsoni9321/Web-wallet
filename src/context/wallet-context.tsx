@@ -29,7 +29,7 @@ interface walletContextType {
   selectedCoinType: coinType | null;
   setSelectedCoinType: React.Dispatch<React.SetStateAction<coinType | null>>;
   createWallet: () => void;
-  deleteWallet: ()=> void
+  deleteWallet: () => void
 }
 
 const WalletInitialisationContext = createContext({} as walletContextType);
@@ -73,7 +73,10 @@ export const WalletContextProvider = ({
     setWallet(null);
     setSeed(null);
     setSeedPhrase(null);
+    getMnemonic();
   }
+
+  console.log("this is the seed...", seed);
 
   const getMnemonic = () => {
     const mnemonics = generateMnemonic(wordlist);
