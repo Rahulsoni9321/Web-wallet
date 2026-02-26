@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { WarningModal } from "./components/common/warning-modal";
 import Navbar from "./components/common/navbar";
+import Footer from "./components/common/footer";
 
 function App() {
   const { seedPhrase, wallet } = useWalletContext();
@@ -54,6 +55,7 @@ function App() {
         <motion.button initial={{ y: 20, opacity: 0, animationDuration: 3 }} animate={{ y: 0, opacity: 100 }} transition={{ delay: 1, duration: 2 }} className="px-6 py-2 mt-8 rounded-lg shadow bg-white text-black flex gap-4 items-center"><Wallet></Wallet>Generate Public-Private Key</motion.button> */}
       </div>
     </MaxWidthWrapper>
+    <Footer></Footer>
     </div>
   );
 }
