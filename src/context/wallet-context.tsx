@@ -59,7 +59,7 @@ export const WalletContextProvider = ({
     null,
   );
   const [selectedCoinType, setSelectedCoinType] = useState<coinType | null>(
-    null,
+    localStorage.getItem('coinType') ? JSON.parse(localStorage.getItem('coinType')!) : 'SOLANA'
   );
   const [wallet, setWallet] = useState<walletType | null>(
     localStorage.getItem("wallet")
@@ -93,6 +93,7 @@ export const WalletContextProvider = ({
   const createWallet = () => {
     const walletCount = wallet ? (wallet[selectedCoinType!]?.length ?? 0) : 0;
     const derivationPath = `m/44'/${coinTypeValue[selectedCoinType!]}'/${walletCount}'/0'`;
+    console.log("this is the derivation Path.",derivationPath);
     const hd = HDKey.fromMasterSeed(seed);
     const child = hd.derive(derivationPath);
     const secretKey = child.privateKey;

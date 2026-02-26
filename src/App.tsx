@@ -25,8 +25,9 @@ function App() {
   }, []);
 
   return (
+    <div className="bg-black">
+    <Navbar></Navbar>
     <MaxWidthWrapper>
-      <Navbar></Navbar>
       <div className="bg-black min-h-screen flex flex-col items-center w-full gap-6 p-12">
         {!seedPhrase && <GenerateMnemonics></GenerateMnemonics>}
 
@@ -53,6 +54,7 @@ function App() {
         <motion.button initial={{ y: 20, opacity: 0, animationDuration: 3 }} animate={{ y: 0, opacity: 100 }} transition={{ delay: 1, duration: 2 }} className="px-6 py-2 mt-8 rounded-lg shadow bg-white text-black flex gap-4 items-center"><Wallet></Wallet>Generate Public-Private Key</motion.button> */}
       </div>
     </MaxWidthWrapper>
+    </div>
   );
 }
 

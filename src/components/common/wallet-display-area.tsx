@@ -1,14 +1,14 @@
 import { useWalletContext } from "@/context/wallet-context";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { PlusCircle, Trash, Key, Wallet } from "lucide-react";
+import { PlusCircle, Trash, Key, Wallet, Copy } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const WalletDisplayArea = () => {
   const { selectedCoinType, wallet, createWallet } = useWalletContext();
 
   return (
-    <div className="rounded-3xl p-6 bg-linear-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white shadow-2xl border border-white/10 backdrop-blur-xl">
+    <div className="rounded-3xl p-6  text-white ">
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
@@ -24,7 +24,7 @@ const WalletDisplayArea = () => {
             className="text-black flex items-center gap-2 hover:scale-105 transition"
           >
             <PlusCircle size={18} />
-            Add
+            Add Wallet
           </Button>
 
           <Button
@@ -32,7 +32,7 @@ const WalletDisplayArea = () => {
             className="flex items-center gap-2 hover:scale-105 transition"
           >
             <Trash size={18} />
-            Clear
+            Clear Wallet
           </Button>
         </div>
       </div>
@@ -58,16 +58,16 @@ const WalletDisplayArea = () => {
                 <div className="relative z-10 flex flex-col gap-3">
 
                   {/* Title */}
-                  <h2 className="text-lg font-semibold flex items-center gap-2">
-                    <Key className="text-cyan-400" size={18} />
+                  <h2 className="font-semibold text-2xl flex items-center gap-2">
+                    <Key className="text-cyan-400 " size={18} />
                     Wallet {index + 1}
                   </h2>
 
                   {/* Public Key */}
                   <div>
                     <p className="text-xs text-gray-400 mb-1">Public Key</p>
-                    <p className="text-sm break-all text-cyan-100">
-                      {walletDetails.publicKey.toString()}
+                    <p className="text-sm break-all text-cyan-100 flex items-center gap-3">
+                      {walletDetails.publicKey.toString()} <Copy className="cursor-pointer w-6 h-6"></Copy>
                     </p>
                   </div>
 

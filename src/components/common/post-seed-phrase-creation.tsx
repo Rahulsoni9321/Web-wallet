@@ -10,8 +10,12 @@ const PostSeedPhraseCreation = () => {
   return (
     <div className="w-full">
       <Tabs
+      defaultValue="SOLANA"
         className="rounded-2xl bg-neutral-900/40 backdrop-blur-3xl shadow-2xl p-8 w-full "
-        onValueChange={(value) => setSelectedCoinType(value as coinType)}
+        onValueChange={(value) => {
+          setSelectedCoinType(value as coinType);
+          localStorage.setItem('coinType',value);
+        }}
       >
         <TabsList variant={"line"} className="text-white">
           {supportedCoins.map((coins: string) => (
@@ -32,7 +36,7 @@ const PostSeedPhraseCreation = () => {
         </TabsList>
 
         {supportedCoins.map((coins: string) => (
-          <TabsContent key={coins} value={coins}>
+          <TabsContent key={coins} value={coins} className="mt-8">
             <WalletDisplayArea />
           </TabsContent>
         ))}

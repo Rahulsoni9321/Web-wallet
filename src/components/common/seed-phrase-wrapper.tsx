@@ -47,9 +47,10 @@ export function SeedPhraseWrapper({ seedPhrase }: { seedPhrase: string[] }) {
                     ></ChevronDown>
                 </div>
                 {seedPhrase && seedDisplay && (
-                    <div className="grid grid-cols-4 gap-6 w-full">
+                    <div className="grid grid-cols-4 gap-3 w-full">
                         {seedPhrase.map((details, index) => {
                             return (
+                                <div className="p-px rounded-md bg-linear-to-br from-transparent to-violet-400 shadow">
                                 <motion.button
                                     initial={{
                                         y: 20,
@@ -62,10 +63,11 @@ export function SeedPhraseWrapper({ seedPhrase }: { seedPhrase: string[] }) {
                                     transition={{
                                         duration: index / 8,
                                     }}
-                                    className="px-4 py-3 max-w-50 rounded-md bg-neutral-800/50 backdrop-blur-2xl font-thin font-serif text-md text-white shadow"
+                                    className="px-4 py-3 rounded-md bg-neutral-950 backdrop-blur-2xl font-normal font-sans text-md text-white shadow-2xl  w-full"
                                 >
                                     {details}
                                 </motion.button>
+                                </div>
                             );
                         })}
                     </div>
