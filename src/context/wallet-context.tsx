@@ -59,7 +59,8 @@ export const WalletContextProvider = ({
     null,
   );
   const [selectedCoinType, setSelectedCoinType] = useState<coinType | null>(
-    localStorage.getItem('coinType') ? JSON.parse(localStorage.getItem('coinType')!) : 'SOLANA'
+    //@ts-ignore
+    localStorage.getItem('coinType') ? localStorage.getItem('coinType')! : 'SOLANA'
   );
   const [wallet, setWallet] = useState<walletType | null>(
     localStorage.getItem("wallet")

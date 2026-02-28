@@ -32,7 +32,7 @@ export function SeedPhraseWrapper({ seedPhrase }: { seedPhrase: string[] }) {
         >
             <div className="flex flex-col gap-10 items-start">
                 <div className="flex justify-between items-center px-6 mb-4 w-full">
-                    <p className="text-5xl font-bold text-white font-sans ">
+                    <p className="text-5xl font-semibold text-white font-sans ">
                         Seed Phrase
                     </p>
                     <ChevronDown

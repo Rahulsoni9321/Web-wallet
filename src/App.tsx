@@ -1,62 +1,30 @@
-import "./App.css";
-import { useWalletContext } from "./context/wallet-context";
-import { MaxWidthWrapper } from "./components/common/max-width-wrapper";
-import { SeedPhraseWrapper } from "./components/common/seed-phrase-wrapper";
-import { GenerateMnemonics } from "./components/common/generate-mnemonics";
-import PostSeedPhraseCreation from "./components/common/post-seed-phrase-creation";
-import { useEffect, useState } from "react";
-import { Button } from "./components/ui/button";
-import { WarningModal } from "./components/common/warning-modal";
-import Navbar from "./components/common/navbar";
-import Footer from "./components/common/footer";
+import "./index.css";
+
+import { Outlet, Route, Routes } from "react-router-dom";
+import RootLayout from "./components/layout/root-layout";
+import SwapRoutes from "./routes/swap.routes";
+import WalletCreationRoute from "./routes/wallet-creation.routes";
+import HeroSection from "./components/common/hero-section";
 
 function App() {
-  const { seedPhrase, wallet } = useWalletContext();
-  const [warningModal, setWarningModal] = useState<boolean>(false);
 
-  // const generatePublicPrivateKey = () => {
-  //   // const privateKey =
-  // }
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem("wallet", JSON.stringify(wallet));
-      localStorage.setItem("seedPhrase", JSON.stringify(seedPhrase));
-    };
-  }, []);
 
   return (
-    <div className="bg-black">
-    <Navbar></Navbar>
-    <MaxWidthWrapper>
-      <div className="bg-black min-h-screen flex flex-col items-center w-full gap-6 p-12">
-        {!seedPhrase && <GenerateMnemonics></GenerateMnemonics>}
 
-        {seedPhrase && (
-          <div className="flex flex-col gap-8 items-start w-full">
-            <SeedPhraseWrapper seedPhrase={seedPhrase}></SeedPhraseWrapper>
-            <Button
-              variant={"destructive"}
-              onClick={() => setWarningModal(!warningModal)}
-              className="bg-white text-black cursor-pointer"
-            >
-              Delete All Wallets?
-            </Button>
-            <WarningModal
-              onOpenChange={() => setWarningModal(!warningModal)}
-              open={warningModal}
-            ></WarningModal>
-          </div>
-        )}
-        {seedPhrase && seedPhrase?.length > 0 && (
-          <PostSeedPhraseCreation></PostSeedPhraseCreation>
-        )}
-        {/* 
-        <motion.button initial={{ y: 20, opacity: 0, animationDuration: 3 }} animate={{ y: 0, opacity: 100 }} transition={{ delay: 1, duration: 2 }} className="px-6 py-2 mt-8 rounded-lg shadow bg-white text-black flex gap-4 items-center"><Wallet></Wallet>Generate Public-Private Key</motion.button> */}
-      </div>
-    </MaxWidthWrapper>
-    <Footer></Footer>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <RootLayout>
+            <Outlet></Outlet>
+          </RootLayout>
+        }
+      >
+        <Route path="/" element={<HeroSection></HeroSection>}></Route>
+        {SwapRoutes()}
+        {WalletCreationRoute()}
+      </Route>
+    </Routes>
   );
 }
 

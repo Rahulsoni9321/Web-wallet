@@ -11,7 +11,7 @@ const PostSeedPhraseCreation = () => {
     <div className="w-full">
       <Tabs
       defaultValue="SOLANA"
-        className="rounded-2xl bg-neutral-900/40 backdrop-blur-3xl shadow-2xl p-8 w-full "
+        className="rounded-2xl bg-neutral-900/40 backdrop-blur-3xl shadow-2xl p-5 w-full "
         onValueChange={(value) => {
           setSelectedCoinType(value as coinType);
           localStorage.setItem('coinType',value);
