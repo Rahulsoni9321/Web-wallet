@@ -8,9 +8,7 @@ import HeroSection from "./components/common/hero-section";
 
 function App() {
 
-
   return (
-
     <Routes>
       <Route
         path="/"

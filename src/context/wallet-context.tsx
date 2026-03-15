@@ -100,9 +100,10 @@ export const WalletContextProvider = ({
     const secretKey = child.privateKey;
     const keyPair = Keypair.fromSeed(secretKey);
 
+    // Convert to strings so they survive JSON.stringify/parse round-trips
     const walletData: keyPairType = {
-      publicKey: keyPair.publicKey,
-      privateKey: keyPair.secretKey,
+      publicKey: keyPair.publicKey.toBase58(),
+      privateKey: Array.from(keyPair.secretKey).map(b => b.toString(16).padStart(2, '0')).join(''),
     };
 
     if (wallet) {

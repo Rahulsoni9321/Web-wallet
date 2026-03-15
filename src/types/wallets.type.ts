@@ -1,9 +1,7 @@
-import type { PublicKey } from "@solana/web3.js";
 
 export interface keyPairType {
-    privateKey: Uint8Array<ArrayBufferLike>,
-    publicKey: PublicKey
-
+    privateKey: string;
+    publicKey: string;
 }
 export interface walletType {
     SOLANA?: keyPairType[],
